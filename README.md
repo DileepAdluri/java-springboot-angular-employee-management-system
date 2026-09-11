@@ -10,6 +10,8 @@ Employee Management CRUD application built using **Java, Spring Boot, Spring Dat
 * MySQL
 * Maven
 * REST API
+* JUnit
+* Mockito
 
 ## Features
 
@@ -20,29 +22,58 @@ Employee Management CRUD application built using **Java, Spring Boot, Spring Dat
 * RESTful API implementation
 * MySQL database integration
 * Layered architecture using Controller, Service, Repository, Entity, and DTO
+* Input validation using Jakarta Validation
+* Global exception handling
+* Unit testing using JUnit and Mockito
 
 ## Project Structure
 
 ```text
-src/main/java/com/example/employeecrud
+EmployeeCRUD
 │
-├── controller
-│   └── EmployeeController.java
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com.example.employeecrud
+│   │   │       │
+│   │   │       ├── controller
+│   │   │       │   └── EmployeeController.java
+│   │   │       │
+│   │   │       ├── dto
+│   │   │       │   ├── ApiResponse.java
+│   │   │       │   └── EmployeeDTO.java
+│   │   │       │
+│   │   │       ├── entity
+│   │   │       │   └── Employee.java
+│   │   │       │
+│   │   │       ├── exception
+│   │   │       │   └── GlobalExceptionHandler.java
+│   │   │       │
+│   │   │       ├── repository
+│   │   │       │   └── EmployeeRepository.java
+│   │   │       │
+│   │   │       ├── service
+│   │   │       │   ├── EmployeeService.java
+│   │   │       │   └── EmployeeServiceImpl.java
+│   │   │       │
+│   │   │       └── EmployeeCrudApplication.java
+│   │   │
+│   │   └── resources
+│   │       └── application.properties
+│   │
+│   └── test
+│       └── java
+│           └── com.example.employeecrud
+│               │
+│               ├── controller
+│               │   └── EmployeeControllerTest.java
+│               │
+│               └── service
+│                   └── EmployeeServiceImplTest.java
 │
-├── dto
-│   └── EmployeeDTO.java
-│
-├── entity
-│   └── Employee.java
-│
-├── repository
-│   └── EmployeeRepository.java
-│
-├── service
-│   ├── EmployeeService.java
-│   └── EmployeeServiceImpl.java
-│
-└── EmployeeCrudApplication.java
+├── pom.xml
+├── README.md
+└── .gitignore
 ```
 
 ## How to Run
@@ -57,6 +88,10 @@ src/main/java/com/example/employeecrud
 
 The application uses **MySQL** with **Spring Data JPA** for database operations.
 
+## Testing
+
+Unit tests are implemented using **JUnit and Mockito** for the Service and Controller layers.
+
 ## Project Purpose
 
-This project was created for practicing and understanding **Java, Spring Boot, REST APIs, JPA, MySQL, and layered application architecture**.
+This project was created for practicing and understanding **Java, Spring Boot, REST APIs, JPA, MySQL, validation, exception handling, unit testing, and layered application architecture**.
