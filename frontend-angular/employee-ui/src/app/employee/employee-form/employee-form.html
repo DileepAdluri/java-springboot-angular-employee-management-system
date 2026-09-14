@@ -1,0 +1,236 @@
+<div class="employee-form-container">
+
+  <div class="form-header">
+
+    <div class="form-title">
+
+      <button
+        type="button"
+        class="back-btn"
+        (click)="closeForm()"
+        title="Back to Employee List">
+
+        ←
+
+      </button>
+
+      <div>
+
+        <h2>
+          {{ employee ? 'Edit Employee' : 'Add Employee' }}
+        </h2>
+
+        <p>
+          {{ employee ? 'Update employee details' : 'Enter employee details' }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <form
+    class="form-body"
+    [formGroup]="employeeForm"
+    (ngSubmit)="saveEmployee()">
+
+
+    <div class="form-group">
+
+      <label for="id">
+        Employee ID
+      </label>
+
+      <input
+        id="id"
+        type="text"
+        maxlength="20"
+        formControlName="id"
+        placeholder="Enter employee ID"
+        [readonly]="employee !== null"
+        [class.input-error]="submitted && id.invalid"
+      />
+
+      @if (submitted && id.hasError('required')) {
+
+        <span class="validation-message">
+          Employee ID is required.
+        </span>
+
+      }
+
+      @if (submitted && id.hasError('pattern')) {
+
+        <span class="validation-message">
+          Employee ID must contain numbers only.
+        </span>
+
+      }
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="name">
+        Name
+      </label>
+
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Enter employee name"
+        [class.input-error]="submitted && name.invalid"
+      />
+
+      @if (submitted && name.hasError('required')) {
+
+        <span class="validation-message">
+          Name is required.
+        </span>
+
+      }
+
+      @if (submitted && name.hasError('pattern')) {
+
+        <span class="validation-message">
+          Name can contain letters and spaces only.
+        </span>
+
+      }
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="email">
+        Email
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="Enter email address"
+        [class.input-error]="submitted && email.invalid"
+      />
+
+      @if (submitted && email.hasError('required')) {
+
+        <span class="validation-message">
+          Email is required.
+        </span>
+
+      }
+
+      @if (submitted && email.hasError('email')) {
+
+        <span class="validation-message">
+          Please enter a valid email address.
+        </span>
+
+      }
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="phoneNumber">
+        Phone Number
+      </label>
+
+      <input
+        id="phoneNumber"
+        type="text"
+        maxlength="10"
+        formControlName="phoneNumber"
+        placeholder="Enter 10-digit phone number"
+        [class.input-error]="submitted && phoneNumber.invalid"
+      />
+
+      @if (submitted && phoneNumber.hasError('required')) {
+
+        <span class="validation-message">
+          Phone number is required.
+        </span>
+
+      }
+
+      @if (submitted && phoneNumber.hasError('pattern')) {
+
+        <span class="validation-message">
+          Enter a valid 10-digit Indian mobile number.
+        </span>
+
+      }
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="salary">
+        Salary
+      </label>
+
+      <input
+        id="salary"
+        type="number"
+        formControlName="salary"
+        placeholder="Enter salary"
+        [class.input-error]="submitted && salary.invalid"
+      />
+
+      @if (submitted && salary.hasError('required')) {
+
+        <span class="validation-message">
+          Salary is required.
+        </span>
+
+      }
+
+      @if (submitted && salary.hasError('min')) {
+
+        <span class="validation-message">
+          Salary must be greater than 0.
+        </span>
+
+      }
+
+    </div>
+
+
+    <div class="form-actions">
+
+      <button
+        type="button"
+        class="cancel-btn"
+        (click)="closeForm()">
+
+        Cancel
+
+      </button>
+
+
+      <button
+        type="submit"
+        class="save-btn"
+        [disabled]="isSaving">
+
+        {{ isSaving
+          ? (employee ? 'Updating...' : 'Saving...')
+          : (employee ? 'Update Employee' : 'Save Employee')
+        }}
+
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

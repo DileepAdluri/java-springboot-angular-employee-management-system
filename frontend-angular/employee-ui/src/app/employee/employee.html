@@ -1,0 +1,313 @@
+@if (showForm) {
+
+  <app-employee-form
+    [employee]="selectedEmployee"
+    (close)="closeForm()"
+    (employeeSaved)="showSuccessMessage($event)">
+  </app-employee-form>
+
+} @else {
+
+  <div class="employee-container">
+
+    <div class="page-header">
+
+      <div class="page-title">
+
+        <div class="title-icon">
+          <span>👥</span>
+        </div>
+
+        <div>
+          <h1>Employee List</h1>
+          <p>Manage and view all employees</p>
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="add-employee-btn"
+        (click)="openAddEmployee()">
+
+        <span class="btn-icon">+</span>
+        Add Employee
+
+      </button>
+
+    </div>
+
+
+    <div class="toolbar">
+
+      <div class="search-box">
+
+        <span class="search-icon">⌕</span>
+
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="searchEmployees()"
+          placeholder="Search by ID, name, email or phone number..."
+        />
+
+      </div>
+
+
+      <div class="employee-total">
+
+        <span>Total Employees</span>
+
+        <strong>
+          {{ employees.length }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="table-card">
+
+      <div class="table-scroll">
+
+        <table class="employee-table">
+
+          <thead>
+
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Salary</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              employee of displayedEmployees;
+              track employee.id;
+              let i = $index
+            ) {
+
+              <tr>
+
+                <td class="serial-number">
+                  {{ (currentPage - 1) * pageSize + i + 1 }}
+                </td>
+
+                <td>
+
+                  <span class="employee-id">
+                    {{ employee.id }}
+                  </span>
+
+                </td>
+
+                <td class="employee-name">
+                  {{ employee.name }}
+                </td>
+
+                <td>
+                  {{ employee.email }}
+                </td>
+
+                <td>
+                  {{ employee.phoneNumber }}
+                </td>
+
+                <td class="salary">
+                  ₹{{ employee.salary }}
+                </td>
+
+                <td class="actions">
+
+                  <button
+                    type="button"
+                    class="edit-btn"
+                    title="Edit Employee"
+                    (click)="openEditEmployee(employee)">
+
+                    ✎
+
+                  </button>
+
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    title="Delete Employee"
+                    (click)="openDeleteConfirmation(employee)">
+
+                    🗑
+
+                  </button>
+
+                </td>
+
+              </tr>
+
+            }
+
+
+            @if (displayedEmployees.length === 0) {
+
+              <tr>
+
+                <td
+                  colspan="7"
+                  class="no-data">
+
+                  No employees found
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="table-footer">
+
+        <span>
+          Showing
+          {{ startRecord }}
+          to
+          {{ endRecord }}
+          of
+          {{ filteredEmployees.length }}
+          employees
+        </span>
+
+
+        <div class="pagination">
+
+          <button
+            type="button"
+            class="page-btn"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1">
+
+            ‹
+
+          </button>
+
+
+          <button
+            type="button"
+            class="page-btn active">
+
+            {{ currentPage }}
+
+          </button>
+
+
+          <button
+            type="button"
+            class="page-btn"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages || totalPages === 0">
+
+            ›
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+
+@if (showDeleteConfirmation) {
+
+  <div class="delete-modal-backdrop">
+
+    <div class="delete-modal">
+
+      <div class="delete-modal-icon">
+        !
+      </div>
+
+      <div class="delete-modal-content">
+
+        <h3>Delete Employee?</h3>
+
+        <p>
+          Are you sure you want to delete
+          <strong>{{ employeeToDelete?.name }}</strong>?
+        </p>
+
+        <span>
+          This action cannot be undone.
+        </span>
+
+      </div>
+
+      <div class="delete-modal-actions">
+
+        <button
+          type="button"
+          class="delete-cancel-btn"
+          (click)="closeDeleteConfirmation()"
+          [disabled]="isDeleting">
+
+          Cancel
+
+        </button>
+
+        <button
+          type="button"
+          class="delete-confirm-btn"
+          (click)="confirmDelete()"
+          [disabled]="isDeleting">
+
+          {{ isDeleting ? 'Deleting...' : 'Delete Employee' }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+
+@if (successMessage) {
+
+  <div class="success-toast">
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <div class="success-content">
+
+      <strong>Success</strong>
+
+      <span>
+        {{ successMessage }}
+      </span>
+
+    </div>
+
+  </div>
+
+}
