@@ -72,6 +72,7 @@ This project demonstrates a complete full-stack CRUD application where the Angul
 
 ## Application Architecture
 
+```text
 ┌─────────────────────────────────────┐
 │          Angular Frontend           │
 │                                     │
@@ -100,11 +101,13 @@ This project demonstrates a complete full-stack CRUD application where the Angul
 ┌─────────────────────────────────────┐
 │            MySQL Database           │
 └─────────────────────────────────────┘
+```
 
 ## Project Structure
 
+```text
 java-springboot-angular-employee-management-system
-
+│
 ├── .gitignore
 ├── .gitattributes
 ├── README.md
@@ -164,19 +167,15 @@ java-springboot-angular-employee-management-system
     │
     └── employee-ui
         │
-        ├── .editorconfig
-        ├── .prettierrc
-        ├── angular.json
-        ├── package.json
-        ├── package-lock.json
-        │
         ├── public
         │   └── favicon.ico
         │
         ├── src
+        │   │
         │   ├── app
         │   │   │
         │   │   ├── employee
+        │   │   │   │
         │   │   │   ├── models
         │   │   │   │   ├── employee.ts
         │   │   │   │   └── api-response.ts
@@ -201,22 +200,28 @@ java-springboot-angular-employee-management-system
         │   │   ├── app.config.ts
         │   │   └── app.routes.ts
         │   │
-        │   ├── main.ts
         │   ├── index.html
+        │   ├── main.ts
         │   └── styles.css
         │
+        ├── .editorconfig
+        ├── .prettierrc
+        ├── angular.json
+        ├── package.json
+        ├── package-lock.json
         ├── tsconfig.app.json
         ├── tsconfig.json
         └── tsconfig.spec.json
+```
 
 ## Backend API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | /employee/getEmployee | Get all employees |
-| POST | /employee/saveEmployee | Create a new employee |
-| PUT | /employee/updateEmployee/{id} | Update an existing employee |
-| DELETE | /employee/deleteEmployee/{id} | Delete an employee |
+| GET | `/employee/getEmployee` | Get all employees |
+| POST | `/employee/saveEmployee` | Create a new employee |
+| PUT | `/employee/updateEmployee/{id}` | Update an existing employee |
+| DELETE | `/employee/deleteEmployee/{id}` | Delete an employee |
 
 ## Employee Fields
 
@@ -268,14 +273,18 @@ The application uses **MySQL** with **Spring Data JPA**.
 
 Create the database before running the backend:
 
+```sql
 CREATE DATABASE employeedb;
+```
 
-Database configuration:
+The application uses the following database configuration:
 
-- Database: employeedb
-- Host: localhost
-- Port: 3306
-- Username: root
+```text
+Database: employeedb
+Host: localhost
+Port: 3306
+Username: root
+```
 
 The database password is supplied through the `DB_PASSWORD` environment variable and is not stored directly in source control.
 
@@ -296,15 +305,23 @@ Make sure the following are installed:
 
 Clone the repository using:
 
+```bash
 git clone https://github.com/DileepAdluri/java-springboot-angular-employee-management-system.git
+```
 
 Navigate to the project:
 
+```bash
 cd java-springboot-angular-employee-management-system
+```
 
 ### 2. Create MySQL Database
 
-Start MySQL and create the `employeedb` database.
+Start MySQL and create the database:
+
+```sql
+CREATE DATABASE employeedb;
+```
 
 ### 3. Configure Database Password
 
@@ -312,59 +329,103 @@ The backend reads the database password from the `DB_PASSWORD` environment varia
 
 For Windows PowerShell:
 
+```powershell
 $env:DB_PASSWORD="your-password"
+```
 
 ### 4. Run Spring Boot Backend
 
-Navigate to the backend:
+Open a terminal and navigate to:
 
+```bash
 cd backend-springboot
+```
 
 Run the Spring Boot application:
 
+```bash
 mvn spring-boot:run
+```
 
 The backend will start at:
 
+```text
 http://localhost:8080
+```
 
 ### 5. Run Angular Frontend
 
 Open another terminal and navigate to:
 
+```bash
 cd frontend-angular/employee-ui
+```
 
 Install Angular dependencies:
 
+```bash
 npm install
+```
 
 Start the Angular development server:
 
+```bash
 ng serve
+```
 
 The frontend will be available at:
 
+```text
 http://localhost:4200
+```
 
 ## Application Flow
 
-User → Angular Employee Management UI → Spring Boot REST API → Employee Service → Employee Repository → MySQL Database → REST API Response → Angular UI
+```text
+User
+  │
+  ▼
+Angular Employee Management UI
+  │
+  │ HTTP Request
+  ▼
+Spring Boot REST API
+  │
+  ▼
+Employee Service
+  │
+  ▼
+Employee Repository
+  │
+  ▼
+MySQL Database
+  │
+  ▼
+Spring Boot REST API Response
+  │
+  ▼
+Angular UI
+```
 
 ## CRUD Operations
 
 ### Create Employee
 
-The Angular application sends employee information to the Spring Boot backend using:
+The Angular application sends employee information to:
 
+```text
 POST /employee/saveEmployee
+```
 
-The backend validates the request and stores the employee in MySQL.
+The Spring Boot backend validates the request and stores the employee in MySQL.
 
 ### Get Employees
 
 The Angular application retrieves employees using:
 
+```text
 GET /employee/getEmployee
+```
 
 The employee list is displayed in the Angular UI.
 
@@ -372,7 +433,9 @@ The employee list is displayed in the Angular UI.
 
 When an employee is edited, the Angular application sends:
 
+```text
 PUT /employee/updateEmployee/{id}
+```
 
 The backend updates the corresponding employee record.
 
@@ -382,7 +445,9 @@ When deleting an employee, the Angular application displays a confirmation dialo
 
 After confirmation, the Angular application sends:
 
+```text
 DELETE /employee/deleteEmployee/{id}
+```
 
 The employee is removed from the database and the updated employee list is displayed.
 
@@ -407,6 +472,7 @@ Validation errors are returned as structured API responses.
 
 Example API response:
 
+```json
 {
   "message": "Validation failed",
   "data": {
@@ -414,6 +480,7 @@ Example API response:
     "email": "Please enter a valid email address"
   }
 }
+```
 
 ## API Response Format
 
@@ -421,10 +488,12 @@ The backend uses a common API response structure.
 
 Example:
 
+```json
 {
   "message": "Employees fetched successfully",
   "data": []
 }
+```
 
 The response contains:
 
@@ -445,9 +514,10 @@ Unit tests cover the Controller and Service layers.
 
 Run backend tests using:
 
+```bash
 cd backend-springboot
-
 mvn test
+```
 
 ### Frontend Testing
 
@@ -455,15 +525,20 @@ Angular test configuration is included in the frontend application.
 
 Run frontend tests using:
 
+```bash
 cd frontend-angular/employee-ui
-
 ng test
+```
 
 ## Security and Configuration
 
 Database credentials are not hard-coded in the application configuration.
 
-The database password is supplied through the `DB_PASSWORD` environment variable.
+The database password is supplied through an environment variable:
+
+```text
+DB_PASSWORD
+```
 
 Local configuration files and sensitive values are excluded from source control through `.gitignore`.
 
